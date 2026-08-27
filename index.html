@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The No-Wahala Bicycle Repair Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol-900:#152524;
+    --petrol-800:#1c332f;
+    --paper:#f7f2e7;
+    --paper-warm:#efe6d3;
+    --brass:#c08a3e;
+    --brass-light:#e0b56c;
+    --rust:#a8492c;
+    --ink:#152524;
+    --ink-soft:#5a655f;
+    --line:#ddd3ba;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    line-height:1.08;
+    letter-spacing:-0.015em;
+    color:var(--ink);
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:620px; margin:0 auto; padding:0 24px;}
+  a{color:inherit;}
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- URGENCY BAR ---------- */
+  .urgency-bar{
+    background:var(--petrol-900);
+    color:var(--paper-warm);
+    text-align:center;
+    padding:11px 16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+  }
+  .urgency-bar b{color:var(--brass-light);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:72px 0 60px;
+    text-align:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 700px 400px at 50% -10%, rgba(192,138,62,0.12), transparent 60%),
+      var(--paper);
+  }
+  .gear-orbit{
+    position:absolute;
+    top:-120px; right:-140px;
+    width:420px; height:420px;
+    opacity:0.09;
+    animation:spin 90s linear infinite;
+    pointer-events:none;
+  }
+  .gear-orbit-2{
+    position:absolute;
+    bottom:-160px; left:-160px;
+    width:360px; height:360px;
+    opacity:0.07;
+    animation:spin 70s linear infinite reverse;
+    pointer-events:none;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .identity-tag{
+    position:relative; z-index:2;
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--petrol-900);
+    background:var(--brass-light);
+    padding:8px 16px 8px 12px;
+    border-radius:20px;
+    margin-bottom:26px;
+  }
+  .identity-tag::before{content:"⚙"; font-size:13px;}
+
+  .hero h1{
+    position:relative; z-index:2;
+    font-size:clamp(2.3rem, 7vw, 3.6rem);
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--rust);
+  }
+  .hero .sub{
+    position:relative; z-index:2;
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin:0 auto 34px;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-btn{
+    position:relative; z-index:2;
+    display:inline-block;
+    background:var(--rust);
+    color:var(--paper);
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    padding:18px 30px;
+    border-radius:8px;
+    text-decoration:none;
+    box-shadow:0 6px 0 #7a331f, 0 10px 24px rgba(168,73,44,0.25);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px); box-shadow:0 8px 0 #7a331f, 0 14px 28px rgba(168,73,44,0.3);}
+  .cta-btn:active{transform:translateY(2px); box-shadow:0 3px 0 #7a331f;}
+  .cta-note{
+    position:relative; z-index:2;
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- EMOTIONAL BRIDGE ---------- */
+  .bridge{
+    text-align:center;
+    padding:6px 0 54px;
+  }
+  .bridge p{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:1.35rem;
+    color:var(--petrol-800);
+    max-width:460px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  /* ---------- SECTION generic ---------- */
+  section{padding:50px 0;}
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin-bottom:18px;
+  }
+  .eyebrow::after{content:""; height:1px; flex:1; background:var(--line);}
+
+  /* ---------- PAIN POINTS ---------- */
+  .pain-list{list-style:none;}
+  .pain-list li{
+    position:relative;
+    padding:18px 0 18px 30px;
+    border-bottom:1px solid var(--line);
+    font-size:.99rem;
+    color:var(--ink-soft);
+    transition:padding-left .2s ease, color .2s ease;
+  }
+  .pain-list li:first-child{border-top:1px solid var(--line);}
+  .pain-list li::before{
+    content:"○";
+    position:absolute; left:0; top:17px;
+    color:var(--brass);
+    font-size:11px;
+  }
+  .pain-list li:hover{padding-left:36px; color:var(--ink);}
+  .reassure{
+    margin-top:24px;
+    font-size:1.02rem;
+    color:var(--petrol-900);
+    font-weight:600;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+  }
+
+  /* ---------- PRODUCT INTRO ---------- */
+  .intro-lead{
+    font-size:1.06rem;
+    color:var(--ink-soft);
+    margin-bottom:30px;
+  }
+  .intro-lead b{color:var(--ink); font-weight:700;}
+  .feature-list{list-style:none;}
+  .feature-list li{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:14px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .feature-list li:first-child{border-top:1px solid var(--line);}
+  .check{
+    display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px;
+    background:var(--petrol-900);
+    color:var(--brass-light);
+    border-radius:50%;
+    font-size:.85rem;
+    font-weight:700;
+  }
+  .feature-list b{font-weight:700; color:var(--ink); font-size:1.02rem;}
+  .feature-list span.desc{color:var(--ink-soft); font-size:.95rem; display:block; margin-top:3px;}
+
+  /* ---------- OFFER STACK ---------- */
+  .offer-card{
+    background:var(--petrol-900);
+    color:var(--paper);
+    border-radius:16px;
+    padding:36px 32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .offer-card::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle, rgba(224,181,108,0.15) 1px, transparent 1px);
+    background-size:16px 16px;
+    opacity:.5;
+  }
+  .offer-inner{position:relative; z-index:1;}
+  .offer-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 0;
+    font-size:.95rem;
+    color:#c9c3b3;
+  }
+  .offer-row .struck{text-decoration:line-through; color:#7a8580;}
+  .offer-divider{border-top:1px solid #33403b; margin:12px 0;}
+  .offer-today{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding-top:16px;
+  }
+  .offer-today .label{font-size:.88rem; color:#a9a493; font-family:'IBM Plex Mono', monospace;}
+  .offer-today .amount{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:2.3rem;
+    color:var(--brass-light);
+  }
+
+  /* ---------- TESTIMONIALS: reserved-style ticket ---------- */
+  .testi-note{
+    font-size:.95rem;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .testi-grid{display:grid; gap:16px;}
+  @media(min-width:560px){.testi-grid{grid-template-columns:1fr 1fr;}}
+  .testi-ticket{
+    position:relative;
+    background:var(--paper-warm);
+    border:1.5px dashed var(--brass);
+    border-radius:12px;
+    padding:26px 22px;
+    text-align:center;
+  }
+  .testi-ticket .stars{color:var(--brass); letter-spacing:3px; margin-bottom:12px; font-size:1rem;}
+  .testi-ticket p{color:var(--ink-soft); font-size:.92rem; line-height:1.55;}
+  .testi-ticket .tag{
+    display:inline-block; margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--rust);
+  }
+
+  /* ---------- URGENCY LINE ---------- */
+  .urgency-line{
+    text-align:center;
+    padding:14px 0 54px;
+  }
+  .urgency-line p{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.45rem;
+    color:var(--petrol-900);
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    text-align:center;
+    background:linear-gradient(160deg, var(--brass-light), var(--brass));
+    border-radius:18px;
+    padding:48px 30px;
+    position:relative;
+  }
+  .final-cta .price-line{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.6rem;
+    margin-bottom:22px;
+    color:var(--petrol-900);
+  }
+  .final-cta .cta-btn{
+    background:var(--petrol-900);
+    box-shadow:0 6px 0 #0a1513, 0 10px 24px rgba(21,37,36,0.25);
+  }
+  .final-cta .cta-btn:hover{box-shadow:0 8px 0 #0a1513, 0 14px 28px rgba(21,37,36,0.3);}
+  .final-cta .cta-note{color:#5b4416;}
+
+  /* ---------- GUARANTEE ---------- */
+  .guarantee{
+    text-align:center;
+    padding:50px 0 14px;
+  }
+  .shield{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:52px; height:52px;
+    background:var(--petrol-900);
+    color:var(--brass-light);
+    border-radius:50%;
+    font-size:1.4rem;
+    margin-bottom:16px;
+  }
+  .guarantee p{
+    max-width:480px; margin:0 auto;
+    color:var(--ink-soft);
+    font-size:.97rem;
+  }
+
+  footer.page-footer{
+    text-align:center;
+    padding:34px 0 100px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:#a9a493;
+  }
+
+  /* ---------- STICKY FOOTER ---------- */
+  .sticky-footer{
+    position:sticky; bottom:0; left:0; right:0;
+    background:var(--petrol-900);
+    padding:14px 0;
+    z-index:50;
+    box-shadow:0 -6px 20px rgba(0,0,0,0.15);
+  }
+  .sticky-inner{
+    max-width:620px; margin:0 auto; padding:0 20px;
+    display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .sticky-inner .name{font-size:.88rem; font-weight:700; color:var(--paper);}
+  .sticky-inner .price{font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--brass-light); margin-left:8px;}
+  .sticky-cta{
+    background:var(--rust); color:#fff;
+    font-weight:700;
+    font-size:.85rem;
+    padding:10px 18px;
+    border-radius:6px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== SECTION 1: URGENCY BAR ===================== -->
+<div class="urgency-bar">Early-access pricing for our first cohort <b>·</b> Guide + 2 bonus PDFs for ₦7,500</div>
+
+<!-- ===================== SECTION 2 & 3: IDENTITY + HEADLINE ===================== -->
+<header class="hero">
+  <!-- signature ambient sprocket illustrations -->
+  <svg class="gear-orbit" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#152524" stroke-width="2">
+      <circle cx="50" cy="50" r="32"/>
+      <circle cx="50" cy="50" r="8"/>
+      <g stroke-width="4">
+        <line x1="50" y1="8" x2="50" y2="18"/>
+        <line x1="50" y1="82" x2="50" y2="92"/>
+        <line x1="8" y1="50" x2="18" y2="50"/>
+        <line x1="82" y1="50" x2="92" y2="50"/>
+        <line x1="21" y1="21" x2="28" y2="28"/>
+        <line x1="72" y1="72" x2="79" y2="79"/>
+        <line x1="21" y1="79" x2="28" y2="72"/>
+        <line x1="72" y1="28" x2="79" y2="21"/>
+      </g>
+    </g>
+  </svg>
+  <svg class="gear-orbit-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#a8492c" stroke-width="2.4">
+      <circle cx="50" cy="50" r="30"/>
+      <circle cx="50" cy="50" r="6"/>
+      <g stroke-width="5">
+        <line x1="50" y1="12" x2="50" y2="20"/>
+        <line x1="50" y1="80" x2="50" y2="88"/>
+        <line x1="12" y1="50" x2="20" y2="50"/>
+        <line x1="80" y1="50" x2="88" y2="50"/>
+        <line x1="24" y1="24" x2="30" y2="30"/>
+        <line x1="70" y1="70" x2="76" y2="76"/>
+        <line x1="24" y1="76" x2="30" y2="70"/>
+        <line x1="70" y1="30" x2="76" y2="24"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <span class="identity-tag">For Nigerian Men Ready to Learn a Real Trade</span>
+    <h1>From Guessing to <em>Getting Paid</em></h1>
+    <p class="sub">The diagnose-first, step-by-step guide that takes you from zero bicycle repair knowledge to your first paid job — without wasting months on random videos, wrong parts, or advice that never actually taught you how to start.</p>
+https://chatgpt.com/s/m_6a90744600148191a0071e860ab02a29
+    <!-- ===================== SECTION 4: CTA #1 ===================== -->
+    <a href="#offer" class="cta-btn">Get the Guide for ₦7,500 → Instant access · Guide + 2 bonus PDFs</a>
+    <div class="cta-note">Secure payment · Personal support if you get stuck</div>
+  </div>
+</header>
+
+<!-- ===================== SECTION 5: EMOTIONAL BRIDGE ===================== -->
+<div class="bridge wrap reveal">
+  <p>You've watched the videos. You've stood by the mechanic's shed. You've tried. So why are you still guessing?</p>
+</div>
+
+<!-- ===================== SECTION 6: PAIN POINT BULLETS ===================== -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">What Hasn't Worked</div>
+    <ul class="pain-list">
+      <li>You watched a YouTube video on fixing a slipping chain, followed it exactly, and the problem came right back two weeks later.</li>
+      <li>You stood by the roadside mechanic's shed, watching him work, hoping something would click — but he was too busy to explain, and you were too shy to keep asking "why."</li>
+      <li>You tried adjusting a friend's brakes yourself to help out, and they still didn't stop properly, even after you'd tightened everything you could find.</li>
+      <li>You bought a tool because someone said you'd need it, only to realize later it wasn't even the right one for the job.</li>
+      <li>You changed a part on a bike that didn't actually need changing, and made the original problem worse — then felt like a fraud in front of the person who trusted you to fix it.</li>
+      <li>You've heard "just learn a skill and you'll be fine" more times than you can count, but nobody ever told you what to actually do first.</li>
+    </ul>
+    <p class="reassure">None of this happened because you lack ability. It happened because nobody has ever given you a strategy that matches the world you are actually living in.</p>
+  </div>
+</section>
+
+<!-- ===================== SECTION 7: PRODUCT INTRODUCTION ===================== -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Introducing</div>
+    <p class="intro-lead"><b>The No-Wahala Bicycle Repair Blueprint</b> — a step-by-step guide built for anyone starting from zero, written by someone with over ten years of hands-on repair and business experience. What makes it different is the order: diagnose first, touch second — so you stop guessing and start knowing.</p>
+    <ul class="feature-list">
+      <li><span class="check">✓</span><div><b>Diagnose before you touch.</b><span class="desc">Correctly identify a tyre, brake, or chain problem using the Diagnose-First Method, before you spend a naira on parts.</span></div></li>
+      <li><span class="check">✓</span><div><b>Fix tyres and tubes properly.</b><span class="desc">Remove, inspect, and reinstall without pinching or damaging the tube, and find the actual cause of a puncture.</span></div></li>
+      <li><span class="check">✓</span><div><b>Adjust brakes that actually stop working poorly.</b><span class="desc">Correct positioning, explained simply, so the fix holds.</span></div></li>
+      <li><span class="check">✓</span><div><b>Build the right starter toolkit.</b><span class="desc">Know exactly what to buy first, what it replaces, and what it should cost.</span></div></li>
+      <li><span class="check">✓</span><div><b>Inspect any bike with confidence.</b><span class="desc">Protect yourself and future customers from hidden problems before buying or repairing.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== SECTION 8: CTA #2 ===================== -->
+<div class="wrap reveal" style="text-align:center; padding-bottom:16px;">
+  <a href="#offer" class="cta-btn">Get the Guide for ₦7,500 → Instant access · Guide + 2 bonus PDFs</a>
+</div>
+
+<!-- ===================== SECTION 9: OFFER STACK ===================== -->
+<section id="offer" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Your Offer</div>
+    <div class="offer-card">
+      <div class="offer-inner">
+        <div class="offer-row"><span>Main Guide</span><span class="struck">₦15,000</span></div>
+        <div class="offer-row"><span>Bonus 1 — The Starter Toolkit Guide</span><span>₦3,000</span></div>
+        <div class="offer-row"><span>Bonus 2 — The First Client Checklist</span><span>₦3,000</span></div>
+        <div class="offer-divider"></div>
+        <div class="offer-today">
+          <span class="label">Your price today</span>
+          <span class="amount">₦7,500</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 10: TESTIMONIALS ===================== -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">What Buyers Say</div>
+    <p class="testi-note">This guide is new — real feedback will be added here as buyers work through it. No invented reviews, no borrowed quotes. Just what actually gets said, when it's actually said.</p>
+    <div class="testi-grid">
+      <div class="testi-ticket">
+        <div class="stars">★★★★★</div>
+        <p>Reserved for a real buyer's feedback — name, city, and a specific result, in their own words.</p>
+        <span class="tag">Coming Soon</span>
+      </div>
+      <div class="testi-ticket">
+        <div class="stars">★★★★★</div>
+        <p>Reserved for a real buyer's feedback — name, city, and a specific result, in their own words.</p>
+        <span class="tag">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 11: URGENCY LINE ===================== -->
+<div class="urgency-line wrap reveal">
+  <p>Every week without this method is another week of guessing.</p>
+</div>
+
+<!-- ===================== SECTION 12: FINAL CTA ===================== -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="final-cta">
+      <div class="price-line">₦7,500 · Guide + 2 bonus PDFs</div>
+      <a href="#offer" class="cta-btn">Get Instant Access Now</a>
+      <div class="cta-note">Sent to your email after confirmation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 13: GUARANTEE ===================== -->
+<div class="guarantee wrap reveal">
+  <span class="shield">🛡</span>
+  <p>If you go through the Diagnose-First Method and still can't correctly identify a basic tyre, brake, or chain problem, message me directly and I'll walk you through it personally. Built from ten years of real repair work — I stand behind it.</p>
+</div>
+
+<footer class="page-footer">The No-Wahala Bicycle Repair Blueprint</footer>
+
+<!-- ===================== SECTION 14: STICKY FOOTER ===================== -->
+<div class="sticky-footer">
+  <div class="sticky-inner">
+    <div><span class="name">The No-Wahala Bicycle Repair Blueprint</span><span class="price">₦7,500</span></div>
+    <a href="#offer" class="sticky-cta">Get Access</a>
+  </div>
+</div>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
